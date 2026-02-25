@@ -12,11 +12,11 @@
             --accent-2: #ff6b6b;
             --muted: #555;
         }
-        html,body{height:100%;}
+        html,body
         body{
-            margin:0; padding:24px; font-family: Inter,Segoe UI,Roboto,Arial, sans-serif;
+            margin:0; padding:0; font-family: Inter,Segoe UI,Roboto,Arial, sans-serif;
             background: linear-gradient(135deg,var(--bg-1),var(--bg-2));
-            color:#222;
+            color:#222; 
         }
         h1{margin:0 0 16px 0; font-size:28px; color:#14396a; text-shadow:0 1px 0 rgba(255,255,255,0.6)}
         form#burndown-form{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--card-bg);padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(20,57,106,0.12)}
@@ -29,7 +29,7 @@
         #sampleBtn{background:linear-gradient(180deg,var(--accent-2),#ff4b4b)}
         #exportBtn{background:linear-gradient(180deg,#22c55e,#16a34a)}
         button:active{transform:translateY(1px)}
-        section canvas{background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));border-radius:10px;box-shadow:0 6px 18px rgba(20,57,106,0.08);}
+        section canvas{background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));border-radius:10px;box-shadow:0 6px 18px rgba(20,57,106,0.08);max-width:100%;height:auto;display:block}
         #error{margin-top:8px;font-weight:600}
         @media (max-width:720px){
             form#burndown-form{flex-direction:column}
@@ -37,11 +37,12 @@
         }
         .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
         .chart-header h2{margin:0;font-size:18px;color:#14396a}
-    </style>
+        </style>
 </head>
-<body> 
+<body>
+    <div id="app">
     <h1>Security Remediation - Burndown Chart (UX)</h1>
-    <section>
+    <section style="max-width:900px;margin-top:20px;">
         <form id="burndown-form">
             <label>Security Remediation Start Date: <input type="date" id="startDate" required></label>
             <label>Estimated Completion Date: <input type="date" id="estDate" required></label>
