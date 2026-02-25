@@ -194,7 +194,27 @@ function renderBurndown() {
             responsive: true,
             scales: {
                 x: {
-                    ticks: { maxRotation: 45, minRotation: 0 }
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 0,
+                        autoSkip: false,
+                        callback: function(value, index) {
+                            const labels = (this && this.chart && this.chart.data && this.chart.data.labels) || [];
+                            const label = labels[index] || value;
+                            const d = new Date(label);
+                            if (isNaN(d)) return '';
+                            // Thursday === 4 -> show only Thursdays
+                            if (d.getDay() === 4) {
+                                // short format like '12 Feb'
+                                try {
+                                    return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+                                } catch (e) {
+                                    return label;
+                                }
+                            }
+                            return '';
+                        }
+                    }
                 },
                 y: {
                     beginAtZero: true,
@@ -227,6 +247,21 @@ window.addEventListener('load', function() {
     document.getElementById('renderBtn').addEventListener('click', renderBurndown);
     document.getElementById('sampleBtn').addEventListener('click', loadSampleData);
     document.getElementById('exportBtn').addEventListener('click', exportChartPNG);
+    setupTabs();
     // load a quick sample by default
     loadSampleData();
 });
+
+function setupTabs() {
+    const buttons = Array.from(document.querySelectorAll('.tab-button'));
+    const contents = Array.from(document.querySelectorAll('.tab-content'));
+    function showTab(name) {
+        buttons.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+        contents.forEach(c => c.style.display = (c.id === `tab-${name}`) ? 'block' : 'none');
+        if (name === 'chart') {
+            // ensure chart is rendered when opening the chart tab
+            setTimeout(() => { try { renderBurndown(); } catch (e) {} }, 10);
+        }
+    }
+    buttons.forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+}
