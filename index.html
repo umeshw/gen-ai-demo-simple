@@ -42,8 +42,13 @@
 <body>
     <div id="app">
     <h1>Security Remediation - Burndown Chart (UX)</h1>
-    <section style="max-width:900px;margin-top:20px;">
-        <form id="burndown-form">
+        <div class="tabs" style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+            <button class="tab-button active" data-tab="inputs" type="button">Inputs</button>
+            <button class="tab-button" data-tab="chart" type="button">Chart</button>
+        </div>
+
+        <section id="tab-inputs" class="tab-content" style="max-width:900px;margin-top:12px;display:block;">
+            <form id="burndown-form">
             <label>Security Remediation Start Date: <input type="date" id="startDate" required></label>
             <label>Estimated Completion Date: <input type="date" id="estDate" required></label>
             <label>Total Packages: <input type="number" id="totalPackages" min="1" value="10" required></label>
@@ -70,7 +75,7 @@
         </form>
     </section>
 
-    <section style="max-width:900px;margin-top:20px;">
+    <section id="tab-chart" class="tab-content" style="max-width:900px;margin-top:12px;display:none;">
         <div class="chart-header">
             <h2>Burndown Chart</h2>
         </div>
