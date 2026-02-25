@@ -197,13 +197,22 @@ function renderBurndown() {
                     ticks: {
                         maxRotation: 45,
                         minRotation: 0,
+                        autoSkip: false,
                         callback: function(value, index) {
                             const labels = (this && this.chart && this.chart.data && this.chart.data.labels) || [];
                             const label = labels[index] || value;
                             const d = new Date(label);
                             if (isNaN(d)) return '';
-                            // Thursday === 4
-                            return d.getDay() === 4 ? label : '';
+                            // Thursday === 4 -> show only Thursdays
+                            if (d.getDay() === 4) {
+                                // short format like '12 Feb'
+                                try {
+                                    return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+                                } catch (e) {
+                                    return label;
+                                }
+                            }
+                            return '';
                         }
                     }
                 },
